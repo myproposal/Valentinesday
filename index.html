@@ -19,13 +19,13 @@
         justify-content: center;
         align-items: center;
         padding: 20px;
-        overflow: hidden; /* Prevent scrolling when button jumps */
+        overflow-x: hidden;
       }
 
       .container {
         background: white;
         border-radius: 30px;
-        padding: 40px 30px;
+        padding: 50px 40px;
         box-shadow: 0 20px 60px rgba(255, 105, 180, 0.3);
         max-width: 450px;
         width: 100%;
@@ -34,11 +34,10 @@
         z-index: 5;
       }
 
-      /* Sections Visibility */
       .generator-section { display: block; }
       .valentine-section { display: none; }
 
-      /* Cat Character Styles */
+      /* Cat Character */
       .cat-container {
         position: relative;
         margin: 0 auto 30px;
@@ -78,6 +77,18 @@
       .cat-eye { width: 14px; height: 14px; background: #000; border-radius: 50%; }
       .cat-nose { width: 12px; height: 10px; background: #ff6b9d; border-radius: 50%; margin: 12px auto 0; }
 
+      .cat-blush-left, .cat-blush-right {
+        width: 30px;
+        height: 18px;
+        background: #f5b5a0;
+        border-radius: 50%;
+        position: absolute;
+        top: 58px;
+        opacity: 0.7;
+      }
+      .cat-blush-left { left: 15px; }
+      .cat-blush-right { right: 15px; }
+
       .heart-decoration {
         position: absolute;
         top: -5px;
@@ -103,111 +114,134 @@
 
       @keyframes heartFloat {
         0% { transform: translateY(100vh) scale(0); opacity: 0; }
+        20% { opacity: 0.8; }
         100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
       }
 
-      /* Typography & Form */
-      h1 { color: #333; margin-bottom: 10px; font-size: 24px; }
-      .subtitle { color: #ff69b4; margin-bottom: 25px; font-size: 14px; font-weight: 600; }
-      .form-group { margin-bottom: 15px; text-align: left; }
-      label { display: block; margin-bottom: 5px; color: #555; font-weight: 600; font-size: 14px; }
+      /* Form Elements */
+      h1 { color: #333; margin-bottom: 10px; font-size: 26px; }
+      .subtitle { color: #ff69b4; margin-bottom: 30px; font-size: 14px; font-weight: 600; }
+      
+      .form-group { margin-bottom: 20px; text-align: left; }
+      label { display: block; margin-bottom: 8px; color: #555; font-weight: 600; font-size: 14px; }
+      
       input {
         width: 100%;
-        padding: 12px;
+        padding: 14px 18px;
         border: 2px solid #ffc0cb;
-        border-radius: 12px;
+        border-radius: 15px;
         font-size: 16px;
         background: #fff8fa;
       }
 
       .btn {
         width: 100%;
-        padding: 15px;
+        padding: 16px;
         background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
         color: white;
         border: none;
-        border-radius: 12px;
+        border-radius: 15px;
         font-weight: 700;
         cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
         margin-top: 10px;
       }
 
-      /* Valentine Page Buttons */
+      /* Valentine Section */
       .button-container {
         display: flex;
         gap: 20px;
         justify-content: center;
         align-items: center;
-        margin-top: 30px;
-        min-height: 60px;
+        margin-top: 20px;
+        min-height: 80px;
       }
 
       .valentine-btn {
-        padding: 15px 40px;
+        padding: 16px 50px;
         font-size: 18px;
         font-weight: 700;
         border: none;
         border-radius: 25px;
         cursor: pointer;
-        transition: transform 0.1s;
+        min-width: 120px;
       }
 
-      .yes-btn { background: #ff1493; color: white; }
+      .yes-btn { background: #ff1493; color: white; position: relative; z-index: 1; }
       
       .no-btn { 
         background: #e8e8e8; 
         color: #666; 
-        touch-action: none; /* Critical for mobile */
+        touch-action: none; 
         user-select: none;
+        position: relative;
+        z-index: 1;
       }
 
       .no-btn.moving {
         position: fixed;
         z-index: 1000;
-        transition: all 0.15s ease-out;
+        transition: all 0.2s ease-out;
       }
 
       .success-message { display: none; text-align: center; }
-      .kissing-animation { width: 250px; margin: 20px auto; display: none; }
-      .kissing-animation img { width: 100%; border-radius: 20px; }
+      .kissing-animation { width: 280px; height: 280px; margin: 30px auto; display: none; }
+      .kissing-animation img { width: 100%; height: 100%; object-fit: contain; }
+
+      .amazon-btn {
+        background: linear-gradient(135deg, #ff9900 0%, #e47911 100%);
+        margin-top: 15px;
+      }
+
+      .amazon-text {
+        font-size: 14px;
+        color: #555;
+        margin-top: 25px;
+        font-weight: 600;
+      }
 
       .generated-link {
         display: none;
-        margin-top: 20px;
-        padding: 20px;
-        background: #fff8fa;
-        border: 2px dashed #ffc0cb;
+        margin-top: 30px;
+        padding: 25px;
+        background: linear-gradient(135deg, #fff8fa 0%, #ffe4e9 100%);
         border-radius: 15px;
+        border: 2px solid #ffc0cb;
       }
-      .link-container { word-break: break-all; font-size: 12px; margin: 10px 0; color: #ff1493; }
+      .link-container { word-break: break-all; font-size: 13px; margin: 15px 0; color: #ff1493; background: white; padding: 14px; border-radius: 10px; border: 1px solid #ffc0cb; }
 
       @media (max-width: 600px) {
-        .container { padding: 30px 20px; }
-        h1 { font-size: 20px; }
+        .container { padding: 40px 25px; }
+        h1 { font-size: 22px; }
       }
     </style>
   </head>
   <body>
     <div class="container">
       <div class="generator-section" id="generatorSection">
-        <h1>💝 Valentine Generator</h1>
-        <p class="subtitle">Send a prank proposal link!</p>
+        <h1>💝 Valentine Link Generator</h1>
+        <p class="subtitle">Create personalized Valentine's Day proposals!</p>
+
         <form id="linkForm">
           <div class="form-group">
-            <label>Your Name:</label>
-            <input type="text" id="fromName" placeholder="John" required />
+            <label for="fromName">Your Name:</label>
+            <input type="text" id="fromName" placeholder="e.g., John" required />
           </div>
+
           <div class="form-group">
-            <label>Their Name:</label>
-            <input type="text" id="toName" placeholder="Sarah" required />
+            <label for="toName">Valentine Name:</label>
+            <input type="text" id="toName" placeholder="e.g., Sarah" required />
           </div>
+
           <button type="submit" class="btn">✨ Generate Link</button>
         </form>
 
         <div class="generated-link" id="generatedLink">
-          <h3 style="font-size: 14px;">🎉 Copy & Send this link:</h3>
+          <h3 style="color: #667eea; margin-bottom: 10px">🎉 Your Link is Ready!</h3>
           <div class="link-container" id="linkDisplay"></div>
-          <button class="btn" id="copyBtn" style="background: #667eea;">📋 Copy Link</button>
+          <button class="btn" id="copyBtn">📋 Copy Link</button>
+          <button class="btn" id="createAnother" style="background: #666; margin-top: 5px;">Create Another</button>
         </div>
       </div>
 
@@ -219,32 +253,37 @@
               <div class="cat-ear-left"></div><div class="cat-ear-right"></div>
               <div class="cat-eyes"><div class="cat-eye"></div><div class="cat-eye"></div></div>
               <div class="cat-nose"></div>
+              <div class="cat-blush-left"></div><div class="cat-blush-right"></div>
             </div>
           </div>
-          <h2 style="margin-bottom: 20px;">
-            <span id="toNameDisplay">Hey</span>, will you be my valentine?
+          <h2 style="font-size: 28px; font-weight: 700; margin-bottom: 40px;">
+            <span id="toNameDisplay">Hey there</span>, will you be my valentine?
           </h2>
           <div class="button-container">
             <button class="valentine-btn yes-btn" id="yesBtn">Yes</button>
             <button class="valentine-btn no-btn" id="noBtn">No</button>
           </div>
+          <p style="font-size: 14px; color: #666; margin-top: 10px;">"No" seems a bit shy 😈</p>
         </div>
 
         <div class="success-message" id="successMessage">
           <div class="kissing-animation" id="kissingAnimation">
             <img src="https://media.giphy.com/media/KmxmoHUGPDjfQXqGgv/giphy.gif" alt="Cute cats" />
           </div>
-          <h2 style="color: #ff1493;">Yay! 💖</h2>
-          <p id="fromNameSuccess" style="margin-top: 10px; font-weight: 600;"></p>
-          <a href="https://amzn.to/4qla6uq" target="_blank" class="btn" style="background: #ff9900; text-decoration: none; display: block; margin-top: 20px;">
-            🎁 Send them a gift
+          <h2 style="font-size: 32px; color: #ff1493; font-weight: 700; margin-bottom: 15px;">Yay! 💖</h2>
+          <p style="font-size: 18px; color: #666;"><span id="fromNameSuccess">They</span> will be so happy!</p>
+          
+          <p class="amazon-text">
+            If you’re feeling the love, surprise your Valentine with a gift. 🎁✨
+          </p>
+          <a href="https://amzn.to/4qla6uq" target="_blank" class="btn amazon-btn">
+            💝 Click here to see cute gift options 🎁
           </a>
         </div>
       </div>
     </div>
 
     <script>
-      // 1. Logic for handling URL Parameters
       function getUrlParams() {
         const params = new URLSearchParams(window.location.search);
         return { from: params.get("from"), to: params.get("to") };
@@ -255,13 +294,12 @@
         document.getElementById("generatorSection").style.display = "none";
         document.getElementById("valentineSection").style.display = "block";
         document.getElementById("toNameDisplay").textContent = decodeURIComponent(params.to);
-        document.getElementById("fromNameSuccess").textContent = "You made " + decodeURIComponent(params.from) + " the happiest person!";
+        document.getElementById("fromNameSuccess").textContent = decodeURIComponent(params.from);
         initializeNoButton();
       } else {
         initializeGenerator();
       }
 
-      // 2. Logic for Link Generation
       function initializeGenerator() {
         const form = document.getElementById("linkForm");
         form.addEventListener("submit", (e) => {
@@ -272,37 +310,30 @@
           document.getElementById("linkDisplay").textContent = link;
           document.getElementById("generatedLink").style.display = "block";
         });
-
         document.getElementById("copyBtn").addEventListener("click", function() {
           navigator.clipboard.writeText(document.getElementById("linkDisplay").textContent);
           this.textContent = "✅ Copied!";
-          setTimeout(() => this.textContent = "📋 Copy Link", 2000);
+        });
+        document.getElementById("createAnother").addEventListener("click", () => {
+          form.reset();
+          document.getElementById("generatedLink").style.display = "none";
         });
       }
 
-      // 3. The "Moving No Button" Logic
       function initializeNoButton() {
         const noBtn = document.getElementById("noBtn");
         const yesBtn = document.getElementById("yesBtn");
 
         function moveButton(e) {
-          if (e.type === 'touchstart') e.preventDefault(); // Stop mobile click
-          
+          if (e.type === 'touchstart') e.preventDefault();
           noBtn.classList.add("moving");
-          
-          // Safety padding so button doesn't hit edge of screen
-          const pad = 20;
+          const pad = 25;
           const maxX = window.innerWidth - noBtn.offsetWidth - pad;
           const maxY = window.innerHeight - noBtn.offsetHeight - pad;
-
-          const randomX = Math.max(pad, Math.floor(Math.random() * maxX));
-          const randomY = Math.max(pad, Math.floor(Math.random() * maxY));
-
-          noBtn.style.left = `${randomX}px`;
-          noBtn.style.top = `${randomY}px`;
+          noBtn.style.left = `${Math.max(pad, Math.random() * maxX)}px`;
+          noBtn.style.top = `${Math.max(pad, Math.random() * maxY)}px`;
         }
 
-        // Trigger move on Hover (Desktop) OR Touch (Mobile)
         noBtn.addEventListener("mouseenter", moveButton);
         noBtn.addEventListener("touchstart", moveButton, { passive: false });
 
@@ -310,17 +341,15 @@
           document.getElementById("valentineContent").style.display = "none";
           document.getElementById("successMessage").style.display = "block";
           document.getElementById("kissingAnimation").style.display = "block";
-          setInterval(createHeart, 300);
+          setInterval(() => {
+            const heart = document.createElement("div");
+            heart.classList.add("floating-heart");
+            heart.innerHTML = "❤️";
+            heart.style.left = Math.random() * 100 + "vw";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
+          }, 300);
         });
-      }
-
-      function createHeart() {
-        const heart = document.createElement("div");
-        heart.classList.add("floating-heart");
-        heart.innerHTML = "❤️";
-        heart.style.left = Math.random() * 100 + "vw";
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 4000);
       }
     </script>
   </body>
