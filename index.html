@@ -33,6 +33,8 @@
         text-align: center;
         position: relative;
         z-index: 5;
+        /* Added overflow hidden to keep hearts inside the white part */
+        overflow: hidden; 
       }
 
       .generator-section { display: block; }
@@ -105,18 +107,19 @@
 
       /* Floating Hearts */
       .floating-heart {
-        position: fixed;
+        position: absolute;
         color: #ff1493;
         font-size: 20px;
         pointer-events: none;
-        z-index: 1;
-        animation: heartFloat 4s linear forwards;
+        z-index: 10;
+        animation: heartFloat 3s linear forwards;
+        bottom: 0;
       }
 
       @keyframes heartFloat {
-        0% { transform: translateY(100vh) scale(0); opacity: 0; }
+        0% { transform: translateY(0) scale(0); opacity: 0; }
         20% { opacity: 0.8; }
-        100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        100% { transform: translateY(-400px) scale(1.5); opacity: 0; }
       }
 
       /* Form Elements */
@@ -219,7 +222,7 @@
     </style>
   </head>
   <body>
-    <div class="container">
+    <div class="container" id="mainCard">
       <div class="generator-section" id="generatorSection">
         <h1>💝 Valentine Link Generator</h1>
         <p class="subtitle">Create personalized Valentine's Day proposals!</p>
@@ -343,38 +346,38 @@
           document.getElementById("successMessage").style.display = "block";
           document.getElementById("kissingAnimation").style.display = "block";
           
-          // 1. PARTY POPPER EFFECT
+          const container = document.getElementById("mainCard");
+
+          // 1. PARTY POPPER EFFECT (Adjusted to appear inside)
           const duration = 5 * 1000;
           const animationEnd = Date.now() + duration;
-          const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-
-          function randomInRange(min, max) {
-            return Math.random() * (max - min) + min;
-          }
+          // Set zIndex higher (10) so it's on top of the white card
+          const defaults = { startVelocity: 25, spread: 360, ticks: 50, zIndex: 10 };
 
           const interval = setInterval(function() {
             const timeLeft = animationEnd - Date.now();
+            if (timeLeft <= 0) return clearInterval(interval);
 
-            if (timeLeft <= 0) {
-              return clearInterval(interval);
-            }
-
-            const particleCount = 50 * (timeLeft / duration);
-            confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
-            confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+            const particleCount = 30 * (timeLeft / duration);
+            // Confetti now targets the center of the card
+            confetti({ 
+              ...defaults, 
+              particleCount, 
+              origin: { x: 0.5, y: 0.5 } 
+            });
           }, 250);
 
-          // 2. ROMANTIC FLOATING HEARTS EFFECT
+          // 2. ROMANTIC FLOATING HEARTS (Now appended to container)
           setInterval(() => {
             const hearts = ["❤️", "💖", "💝", "💗", "💘"];
             const heart = document.createElement("div");
             heart.classList.add("floating-heart");
             heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
-            heart.style.left = Math.random() * 100 + "vw";
-            heart.style.fontSize = (Math.random() * 20 + 20) + "px"; // Varying sizes
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 4000);
-          }, 200);
+            heart.style.left = Math.random() * 80 + 10 + "%"; // Keep within white card width
+            heart.style.fontSize = (Math.random() * 15 + 15) + "px";
+            container.appendChild(heart);
+            setTimeout(() => heart.remove(), 3000);
+          }, 300);
         });
       }
     </script>
