@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Will you be my valentine</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
       * {
         margin: 0;
@@ -341,14 +342,39 @@
           document.getElementById("valentineContent").style.display = "none";
           document.getElementById("successMessage").style.display = "block";
           document.getElementById("kissingAnimation").style.display = "block";
+          
+          // 1. PARTY POPPER EFFECT
+          const duration = 5 * 1000;
+          const animationEnd = Date.now() + duration;
+          const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+          function randomInRange(min, max) {
+            return Math.random() * (max - min) + min;
+          }
+
+          const interval = setInterval(function() {
+            const timeLeft = animationEnd - Date.now();
+
+            if (timeLeft <= 0) {
+              return clearInterval(interval);
+            }
+
+            const particleCount = 50 * (timeLeft / duration);
+            confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+            confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+          }, 250);
+
+          // 2. ROMANTIC FLOATING HEARTS EFFECT
           setInterval(() => {
+            const hearts = ["❤️", "💖", "💝", "💗", "💘"];
             const heart = document.createElement("div");
             heart.classList.add("floating-heart");
-            heart.innerHTML = "❤️";
+            heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
             heart.style.left = Math.random() * 100 + "vw";
+            heart.style.fontSize = (Math.random() * 20 + 20) + "px"; // Varying sizes
             document.body.appendChild(heart);
             setTimeout(() => heart.remove(), 4000);
-          }, 300);
+          }, 200);
         });
       }
     </script>
