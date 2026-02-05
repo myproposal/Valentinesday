@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Will you be my valentine</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(
+          135deg,
+          #ffd1dc 0%,
+          #ffb6c1 50%,
+          #ffc0cb 100%
+        );
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        overflow-x: hidden;
+      }
+
+      .container {
+        background: white;
+        border-radius: 30px;
+        padding: 50px 40px;
+        box-shadow: 0 20px 60px rgba(255, 105, 180, 0.3);
+        max-width: 450px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        z-index: 5;
+      }
+
+      .generator-section {
+        display: block;
+      }
+
+      .valentine-section {
+        display: none;
+      }
+
+      /* Cat Character */
+      .cat-container {
+        position: relative;
+        margin: 0 auto 30px;
+        width: 180px;
+        height: 140px;
+      }
+
+      .cat-face {
+        width: 160px;
+        height: 130px;
+        background: #f4c5a3;
+        border-radius: 50% 50% 50% 50%;
+        position: relative;
+        margin: 0 auto;
+        box-shadow: 0 8px 20px rgba(244, 197, 163, 0.3);
+      }
+
+      .cat-ear-left,
+      .cat-ear-right {
+        width: 35px;
+        height: 35px;
+        background: #f4c5a3;
+        border-radius: 80% 0 50% 50%;
+        position: absolute;
+        top: -8px;
+      }
+
+      .cat-ear-left {
+        left: 20px;
+        transform: rotate(-40deg);
+      }
+
+      .cat-ear-right {
+        right: 20px;
+        transform: rotate(40deg) scaleX(-1);
+      }
+
+      .cat-eyes {
+        display: flex;
+        justify-content: center;
+        gap: 45px;
+        padding-top: 45px;
+      }
+
+      .cat-eye {
+        width: 14px;
+        height: 14px;
+        background: #000;
+        border-radius: 50%;
+      }
+
+      .cat-nose {
+        width: 12px;
+        height: 10px;
+        background: #ff6b9d;
+        border-radius: 50%;
+        margin: 12px auto 0;
+      }
+
+      .cat-blush-left,
+      .cat-blush-right {
+        width: 30px;
+        height: 18px;
+        background: #f5b5a0;
+        border-radius: 50%;
+        position: absolute;
+        top: 58px;
+        opacity: 0.7;
+      }
+
+      .cat-blush-left {
+        left: 15px;
+      }
+
+      .cat-blush-right {
+        right: 15px;
+      }
+
+      .heart-decoration {
+        position: absolute;
+        top: -5px;
+        right: 0px;
+        font-size: 50px;
+        animation: float 3s ease-in-out infinite;
+        filter: drop-shadow(0 4px 8px rgba(255, 107, 157, 0.3));
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(-5deg); }
+        50% { transform: translateY(-8px) rotate(5deg); }
+      }
+
+      /* Floating Love Hearts Animation */
+      .floating-heart {
+        position: fixed;
+        color: #ff1493;
+        font-size: 20px;
+        user-select: none;
+        pointer-events: none;
+        z-index: 1;
+        animation: heartFloat 4s linear forwards;
+      }
+
+      @keyframes heartFloat {
+        0% { transform: translateY(100vh) scale(0); opacity: 0; }
+        20% { opacity: 0.8; }
+        100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 10px;
+        text-align: center;
+        font-size: 26px;
+      }
+
+      .subtitle {
+        text-align: center;
+        color: #ff69b4;
+        margin-bottom: 30px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        color: #555;
+        font-weight: 600;
+        font-size: 14px;
+        text-align: left;
+      }
+
+      input {
+        width: 100%;
+        padding: 14px 18px;
+        border: 2px solid #ffc0cb;
+        border-radius: 15px;
+        font-size: 16px;
+        transition: all 0.3s;
+        background: #fff8fa;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: #ff69b4;
+        box-shadow: 0 0 0 4px rgba(255, 105, 180, 0.1);
+        background: white;
+      }
+
+      .btn {
+        width: 100%;
+        padding: 16px;
+        background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+        color: white;
+        border: none;
+        border-radius: 15px;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        margin-top: 10px;
+        box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
+      }
+
+      .amazon-btn {
+        background: linear-gradient(135deg, #ff9900 0%, #e47911 100%);
+        box-shadow: 0 4px 15px rgba(228, 121, 17, 0.3);
+        margin-top: 15px;
+      }
+
+      .amazon-text {
+        font-size: 14px;
+        color: #555;
+        margin-top: 25px;
+        font-weight: 600;
+      }
+
+      .generated-link {
+        display: none;
+        margin-top: 30px;
+        padding: 25px;
+        background: linear-gradient(135deg, #fff8fa 0%, #ffe4e9 100%);
+        border-radius: 15px;
+        border: 2px solid #ffc0cb;
+      }
+
+      .link-container {
+        background: white;
+        padding: 14px;
+        border-radius: 10px;
+        word-break: break-all;
+        margin: 15px 0;
+        font-size: 13px;
+        color: #ff1493;
+        border: 1px solid #ffc0cb;
+      }
+
+      /* Valentine Popup Styles */
+      .valentine-content {
+        text-align: center;
+      }
+
+      .valentine-title {
+        font-size: 28px;
+        color: #000;
+        margin-bottom: 40px;
+        font-weight: 700;
+        line-height: 1.4;
+      }
+
+      .button-container {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        min-height: 80px;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+
+      .valentine-btn {
+        padding: 16px 50px;
+        font-size: 18px;
+        font-weight: 700;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s;
+        min-width: 120px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .yes-btn {
+        background: #ff1493;
+        color: white;
+        position: relative;
+        z-index: 1;
+      }
+
+      .no-btn {
+        background: #e8e8e8;
+        color: #666;
+        position: relative;
+        z-index: 1;
+      }
+
+      .no-btn.moving {
+        position: fixed;
+        transition: all 0.2s ease-out;
+      }
+
+      .shy-message {
+        font-size: 14px;
+        color: #666;
+        margin-top: 10px;
+      }
+
+      .success-message {
+        display: none;
+        text-align: center;
+        position: relative;
+      }
+
+      .kissing-animation {
+        width: 280px;
+        height: 280px;
+        margin: 30px auto;
+        display: none;
+        animation: fadeInScale 0.6s ease-in;
+      }
+
+      @keyframes fadeInScale {
+        from { opacity: 0; transform: scale(0.5); }
+        to { opacity: 1; transform: scale(1); }
+      }
+
+      .kissing-animation img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .success-text {
+        font-size: 32px;
+        color: #ff1493;
+        font-weight: 700;
+        margin-bottom: 15px;
+      }
+
+      .success-subtitle {
+        font-size: 18px;
+        color: #666;
+      }
+
+      @media (max-width: 600px) {
+        .container { padding: 40px 25px; }
+        h1 { font-size: 22px; }
+        .valentine-title { font-size: 24px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="generator-section" id="generatorSection">
+        <h1>💝 Valentine Link Generator</h1>
+        <p class="subtitle">Create personalized Valentine's Day proposals!</p>
+
+        <form id="linkForm">
+          <div class="form-group">
+            <label for="fromName">Your Name:</label>
+            <input type="text" id="fromName" placeholder="e.g., John" required />
+          </div>
+
+          <div class="form-group">
+            <label for="toName">Valentine Name:</label>
+            <input type="text" id="toName" placeholder="e.g., Sarah" required />
+          </div>
+
+          <button type="submit" class="btn">✨ Generate Link</button>
+        </form>
+
+        <div class="generated-link" id="generatedLink">
+          <h3 style="color: #667eea; margin-bottom: 10px">🎉 Your Link is Ready!</h3>
+          <div class="link-container" id="linkDisplay"></div>
+          <button class="btn" id="copyBtn">📋 Copy Link</button>
+          <button class="btn" id="createAnother" style="background: #666; margin-top: 5px;">Create Another</button>
+        </div>
+      </div>
+
+      <div class="valentine-section" id="valentineSection">
+        <div class="valentine-content" id="valentineContent">
+          <div class="cat-container">
+            <div class="heart-decoration">💖</div>
+            <div class="cat-face">
+              <div class="cat-ear-left"></div>
+              <div class="cat-ear-right"></div>
+              <div class="cat-eyes">
+                <div class="cat-eye"></div>
+                <div class="cat-eye"></div>
+              </div>
+              <div class="cat-nose"></div>
+              <div class="cat-blush-left"></div>
+              <div class="cat-blush-right"></div>
+            </div>
+          </div>
+
+          <h2 class="valentine-title">
+            <span id="toNameDisplay">Hey there</span>, will you be my valentine?
+          </h2>
+
+          <div class="button-container">
+            <button class="valentine-btn yes-btn" id="yesBtn">Yes</button>
+            <button class="valentine-btn no-btn" id="noBtn">No</button>
+          </div>
+          <p class="shy-message">"No" seems a bit shy 😈</p>
+        </div>
+
+        <div class="success-message" id="successMessage">
+          <div class="kissing-animation" id="kissingAnimation">
+            <img src="https://media.giphy.com/media/KmxmoHUGPDjfQXqGgv/giphy.gif" alt="Cute hugging cats" />
+          </div>
+
+          <h2 class="success-text">Yay! 💖</h2>
+          <p class="success-subtitle">
+            <span id="fromNameSuccess">They</span> will be so happy!
+          </p>
+
+          <p class="amazon-text">
+            If you’re feeling the love, surprise your Valentine with a gift. 🎁✨
+          </p>
+          <a href="https://amzn.to/4qla6uq" target="_blank" class="btn amazon-btn">
+            💝 Click here to see cute gift options 🎁
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function getUrlParams() {
+        const params = new URLSearchParams(window.location.search);
+        return { from: params.get("from"), to: params.get("to") };
+      }
+
+      const params = getUrlParams();
+      if (params.from && params.to) {
+        document.getElementById("generatorSection").style.display = "none";
+        document.getElementById("valentineSection").style.display = "block";
+        document.getElementById("toNameDisplay").textContent = decodeURIComponent(params.to);
+        document.getElementById("fromNameSuccess").textContent = decodeURIComponent(params.from);
+        initializeNoButton();
+      } else {
+        initializeGenerator();
+      }
+
+      function createHeart() {
+        const heart = document.createElement("div");
+        heart.classList.add("floating-heart");
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
+      }
+
+      function initializeGenerator() {
+        const form = document.getElementById("linkForm");
+        const generatedLinkDiv = document.getElementById("generatedLink");
+        const linkDisplay = document.getElementById("linkDisplay");
+        
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const fromName = document.getElementById("fromName").value;
+          const toName = document.getElementById("toName").value;
+          const baseUrl = window.location.origin + window.location.pathname;
+          const link = `${baseUrl}?from=${encodeURIComponent(fromName)}&to=${encodeURIComponent(toName)}`;
+          linkDisplay.textContent = link;
+          generatedLinkDiv.style.display = "block";
+        });
+
+        document.getElementById("copyBtn").addEventListener("click", function() {
+          navigator.clipboard.writeText(linkDisplay.textContent);
+          this.textContent = "✅ Copied!";
+          setTimeout(() => this.textContent = "📋 Copy Link", 2000);
+        });
+
+        document.getElementById("createAnother").addEventListener("click", () => {
+          form.reset();
+          generatedLinkDiv.style.display = "none";
+        });
+      }
+
+      function initializeNoButton() {
+        const noBtn = document.getElementById("noBtn");
+        const yesBtn = document.getElementById("yesBtn");
+        const valentineContent = document.getElementById("valentineContent");
+        const successMessage = document.getElementById("successMessage");
+
+        noBtn.addEventListener("mouseenter", () => {
+          noBtn.classList.add("moving");
+          const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+          const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+          noBtn.style.left = Math.max(20, Math.random() * maxX) + "px";
+          noBtn.style.top = Math.max(20, Math.random() * maxY) + "px";
+        });
+
+        yesBtn.addEventListener("click", () => {
+          valentineContent.style.display = "none";
+          successMessage.style.display = "block";
+          document.getElementById("kissingAnimation").style.display = "block";
+          
+          // Start the love signs (hearts) animation
+          setInterval(createHeart, 300);
+        });
+      }
+    </script>
+  </body>
+</html>
