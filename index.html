@@ -6,7 +6,7 @@
     <title>Will you be my valentine</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-      /* BASE STYLES */
+      /* BASE STYLES - UNCHANGED */
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body {
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -82,7 +82,6 @@
       }
       .cat-blush-left { left: 15px; } .cat-blush-right { right: 15px; }
       .heart-decoration { position: absolute; top: -5px; right: 0px; font-size: 50px; animation: float 3s ease-in-out infinite; }
-      
       @keyframes float { 0%, 100% { transform: translateY(0px) rotate(-5deg); } 50% { transform: translateY(-8px) rotate(5deg); } }
       
       h1 { color: #333; margin-bottom: 10px; font-size: 26px; }
@@ -229,39 +228,37 @@
       const params = { from: urlParams.get("from"), to: urlParams.get("to") };
       const currentUrl = window.location.origin + window.location.pathname;
 
-      // --- COUNTAPI CONFIGURATION ---
-      // This uses a public namespace. In a production app, use a unique key.
-      const API_KEY = "valentine_global_counter_2026"; 
-      const API_BASE = `https://api.countapi.xyz`;
+      // --- NEW RELIABLE LIVE COUNTER LOGIC ---
+      // This uses 'countapi.it' which is more stable for GitHub Pages.
+      const COUNT_KEY = "valentine_proposal_count_unique_2026";
+      const BASE_COUNT = 998000;
 
-      async function updateCounter(isIncrement = true) {
+      async function updateGlobalCount(increment = true) {
         try {
-          const action = isIncrement ? 'hit' : 'get';
-          const response = await fetch(`${API_BASE}/${action}/${API_KEY}/visits`);
-          const data = await response.json();
-          const countDisplay = document.getElementById("xCount");
-          if (countDisplay && data.value) {
-            // We add your starting base 998,000 to the API result
-            countDisplay.textContent = 998000 + data.value;
+          const mode = increment ? "hit" : "get";
+          const res = await fetch(`https://countapi.it/${mode}/${COUNT_KEY}`);
+          const data = await res.json();
+          if (data && data.value !== undefined) {
+            document.getElementById("xCount").innerText = BASE_COUNT + data.value;
           }
-        } catch (err) {
-          console.error("Counter failed:", err);
+        } catch (e) {
+          console.error("Counter error", e);
         }
       }
 
-      // 1. Increment on page load (One person opens, count increases for everyone)
-      updateCounter(true);
+      // Hit counter on page load
+      updateGlobalCount(true);
 
       // APP SHARE LOGIC
       document.getElementById('shareAppBtn').addEventListener('click', async () => {
-        updateCounter(true); // 2. Increase on Share button click
+        updateGlobalCount(true); // Increases count
         const shareData = { title: 'Valentine Proposal', url: currentUrl };
         try { await navigator.share(shareData); } catch (e) { navigator.clipboard.writeText(shareData.url); alert('Link copied!'); }
       });
 
       // SURPRISE WHATSAPP LOGIC
       document.getElementById('waMagicShare').addEventListener('click', () => {
-        updateCounter(true); // 3. Increase on WhatsApp button click
+        updateGlobalCount(true); // Increases count
         const msg = `Surprise your Valentine with this magic link. Be ready to be surprised. 💖\n${currentUrl}`;
         window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
       });
@@ -285,9 +282,7 @@
 
       function initializeGenerator() {
         const form = document.getElementById("linkForm");
-        
-        // Fetch current count without incrementing for the initial display
-        updateCounter(false);
+        updateGlobalCount(false); // Just fetch count to show
 
         form.addEventListener("submit", (e) => {
           e.preventDefault();
@@ -295,7 +290,7 @@
           document.getElementById("linkDisplay").textContent = link;
           document.getElementById("generatedLink").style.display = "block";
           
-          // NOTE: As per instructions, "Generate Link" does NOT increase the counter.
+          // NOTE: Count is NOT increased here as requested
 
           document.getElementById("whatsappBtn").onclick = () => {
             const msg = `Hey… I have a little surprise for you. Open this. ${link}`;
